@@ -2,8 +2,29 @@ import { Image } from '@/components/ui/image'
 
 export function AboutHero() {
   return (
-    <section className="border-b border-border bg-gradient-to-b from-surface to-white">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:px-8">
+    <section className="relative overflow-hidden border-b border-border bg-gradient-to-b from-[#EFF6F5] via-[#E8F2F0] to-white">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-3/5 opacity-[0.14] [mask-image:linear-gradient(to_top,rgba(0,0,0,0.9)_0%,rgba(0,0,0,0)_92%)]"
+      >
+        <Image
+          src="/images/pexels-2478248.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+      </div>
+      <div
+        aria-hidden="true"
+        className="absolute -left-24 -top-28 h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(14,59,54,0.16)_0%,rgba(14,59,54,0)_70%)]"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute -bottom-16 -right-16 h-[300px] w-[300px] rounded-full bg-[radial-gradient(circle,rgba(201,111,74,0.14)_0%,rgba(201,111,74,0)_70%)]"
+      />
+
+      <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:px-8">
         <div>
           <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-terracotta">About</p>
           <h1 className="text-balance font-display text-4xl font-semibold leading-tight tracking-tight text-brand sm:text-5xl">
