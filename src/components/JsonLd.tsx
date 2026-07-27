@@ -1,4 +1,5 @@
 import { businessInfo, siteConfig } from '@/lib/metadata'
+import { TESTIMONIALS } from '@/lib/testimonials'
 
 interface JsonLdProps {
   schema: object
@@ -41,6 +42,12 @@ export function OrganizationJsonLd() {
       ratingValue: businessInfo.rating.value,
       reviewCount: businessInfo.rating.count,
     },
+    review: TESTIMONIALS.map((testimonial) => ({
+      '@type': 'Review',
+      author: { '@type': 'Person', name: testimonial.name },
+      reviewRating: { '@type': 'Rating', ratingValue: 5, bestRating: 5 },
+      reviewBody: testimonial.quote,
+    })),
   }
 
   return <JsonLd schema={schema} />

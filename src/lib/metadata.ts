@@ -5,15 +5,6 @@ import type { Metadata } from 'next'
  * All pages call generateMetadata() to merge page-level overrides
  * with these site-wide defaults.
  */
-export const siteConfig = {
-  name: 'Abishan Umashanker, Realtor®',
-  description:
-    'Abishan Umashanker is a Toronto-based REALTOR® helping buyers, sellers, and investors move forward with confidence across the GTA. Rated 5.0 across 36 Google reviews.',
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://abishanrealtor.ca',
-  ogImage: '/og-image.jpg',
-  locale: 'en_CA',
-} as const
-
 export const businessInfo = {
   legalName: 'Abishan Umashanker',
   brokerage: 'Royal LePage Ignite Realty Brokerage',
@@ -27,8 +18,20 @@ export const businessInfo = {
     'https://www.realtor.ca/agent/2198342/abishan-umashanker-d2-795-milner-avenue-toronto-ontario-m1b3c3',
   mapsUrl:
     'https://www.google.com/maps/search/?api=1&query=795+Milner+Avenue+Toronto+ON+M1B+3C3',
+  // No Google Cloud project is set up for this client, so the review count/rating
+  // isn't pulled live — update this alongside src/lib/testimonials.ts when Abishan
+  // reports new Google reviews. Every other reference to the count reads from here.
+  reviewsUrl: 'https://share.google/mkLtQqcHxk6AdpfIy',
   serviceArea: 'Toronto & the Greater Toronto Area',
-  rating: { value: 5.0, count: 36 },
+  rating: { value: 5.0, count: 46 },
+} as const
+
+export const siteConfig = {
+  name: 'Abishan Umashanker, Realtor®',
+  description: `Abishan Umashanker is a Toronto-based REALTOR® helping buyers, sellers, and investors move forward with confidence across the GTA. Rated ${businessInfo.rating.value.toFixed(1)} across ${businessInfo.rating.count} Google reviews.`,
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://abishanrealtor.ca',
+  ogImage: '/og-image.jpg',
+  locale: 'en_CA',
 } as const
 
 type MetadataOverrides = {
