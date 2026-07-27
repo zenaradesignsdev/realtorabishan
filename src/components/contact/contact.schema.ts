@@ -4,13 +4,11 @@ export const INTEREST_OPTIONS = [
   { value: 'Buying', label: 'Buying a home' },
   { value: 'Selling', label: 'Selling a home' },
   { value: 'First-time buyer', label: 'First-time home buyer' },
-  { value: 'Luxury', label: 'Luxury real estate' },
   { value: 'Commercial', label: 'Commercial real estate' },
   { value: 'Investing', label: 'Real estate investing' },
   { value: 'New construction', label: 'New construction' },
   { value: 'Rentals', label: 'Property rentals' },
   { value: 'Property management', label: 'Property management' },
-  { value: 'Land/farm/lot', label: 'Land, farm or lot sales' },
   { value: 'Other', label: 'Something else' },
 ] as const
 

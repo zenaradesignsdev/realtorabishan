@@ -1,5 +1,3 @@
-import type { LucideIcon } from 'lucide-react'
-
 export interface NavLink {
   href: string
   label: string
@@ -8,7 +6,6 @@ export interface NavLink {
 export interface Service {
   title: string
   description: string
-  icon: LucideIcon
 }
 
 export interface ValueItem {

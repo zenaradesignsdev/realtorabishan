@@ -7,7 +7,7 @@ import { ProcessCta } from '@/components/services/ProcessCta'
 export const metadata: Metadata = buildMetadata({
   title: 'Real Estate Services — Toronto & GTA',
   description:
-    'Full-service real estate representation across Toronto and the GTA — buying, selling, investing, luxury, commercial, new construction, rentals, and more.',
+    'Full-service real estate representation across Toronto and the GTA — buying, selling, investing, commercial, new construction, rentals, and more.',
   path: '/services',
 })
 
