@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Phone, ExternalLink, MapPin } from 'lucide-react'
 import { businessInfo } from '@/lib/metadata'
 import { Logo } from '@/components/layout/Logo'
+import { Image } from '@/components/ui/image'
 
 const EXPLORE_LINKS = [
   { href: '/', label: 'Home' },
@@ -20,23 +21,28 @@ export function Footer() {
             Client-first real estate guidance for buying, selling, and investing across Toronto and
             the GTA.
           </p>
-          {/*
-            No official Royal LePage brand asset was supplied — this text wordmark is a placeholder.
-            Swap for the brokerage's official logo file once provided (see .claude/CLAUDE.md notes).
-          */}
-          <p className="mt-4 text-xs font-semibold uppercase tracking-[0.15em] text-white/50">
-            {businessInfo.brokerage}
-          </p>
+          <div className="mt-5 inline-flex items-center rounded-lg bg-white px-3 py-2">
+            <Image
+              src="/images/royal-lepage-ignite.png"
+              alt={businessInfo.brokerage}
+              width={600}
+              height={142}
+              className="h-6 w-auto"
+            />
+          </div>
         </div>
 
         <div>
           <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.15em] text-terracotta">
             Explore
           </h2>
-          <ul className="flex flex-col gap-3">
+          <ul className="flex flex-col">
             {EXPLORE_LINKS.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="text-sm text-white/80 hover:text-white">
+                <Link
+                  href={link.href}
+                  className="inline-block py-2 text-sm text-white/80 hover:text-white"
+                >
                   {link.label}
                 </Link>
               </li>
@@ -48,11 +54,11 @@ export function Footer() {
           <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.15em] text-terracotta">
             Get in touch
           </h2>
-          <ul className="flex flex-col gap-3 text-sm text-white/80">
+          <ul className="flex flex-col gap-1 text-sm text-white/80">
             <li>
               <a
                 href={`tel:${businessInfo.phone}`}
-                className="inline-flex items-center gap-2 hover:text-white"
+                className="inline-flex items-center gap-2 py-2 hover:text-white"
               >
                 <Phone className="h-4 w-4 shrink-0 text-terracotta" aria-hidden="true" />
                 {businessInfo.phoneDisplay}
@@ -63,13 +69,13 @@ export function Footer() {
                 href={businessInfo.realtorProfileUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 hover:text-white"
+                className="inline-flex items-center gap-2 py-2 hover:text-white"
               >
                 <ExternalLink className="h-4 w-4 shrink-0 text-terracotta" aria-hidden="true" />
                 Realtor.ca profile
               </a>
             </li>
-            <li className="flex items-start gap-2">
+            <li className="flex items-start gap-2 py-2">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-terracotta" aria-hidden="true" />
               <address className="not-italic">
                 {businessInfo.streetAddress}, {businessInfo.addressLocality},{' '}
@@ -100,7 +106,7 @@ export function Footer() {
             &copy; {new Date().getFullYear()} {businessInfo.legalName}, Realtor&reg;. All rights
             reserved.
           </span>
-          <span className="max-w-xl text-xs text-white/40">
+          <span className="max-w-xl text-xs text-white/60">
             REALTOR&reg; is a trademark identifying real estate professionals who are members of
             CREA. {businessInfo.brokerage}. Not intended to solicit clients currently under
             contract.
