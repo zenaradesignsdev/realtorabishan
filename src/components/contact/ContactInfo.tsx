@@ -1,6 +1,21 @@
 import { ExternalLink, MapPin, Phone, Star } from 'lucide-react'
 import { businessInfo } from '@/lib/metadata'
 
+const SERVICE_AREA_CITIES = [
+  'Toronto',
+  'Scarborough',
+  'North York',
+  'Etobicoke',
+  'Markham',
+  'Vaughan',
+  'Richmond Hill',
+  'Mississauga',
+  'Brampton',
+  'Pickering',
+  'Ajax',
+  'Whitby',
+] as const
+
 export function ContactInfo() {
   return (
     <div className="flex flex-col gap-4">
@@ -55,24 +70,33 @@ export function ContactInfo() {
         </address>
       </div>
 
+      <div className="flex items-start gap-4 rounded-2xl border border-border bg-surface px-6 py-5">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand">
+          <MapPin className="h-5 w-5 text-terracotta" aria-hidden="true" />
+        </span>
+        <div>
+          <span className="block text-xs font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+            Service Area
+          </span>
+          <div className="mt-2.5 flex flex-wrap gap-1.5">
+            {SERVICE_AREA_CITIES.map((city) => (
+              <span
+                key={city}
+                className="rounded-full border border-border bg-white px-3 py-1 text-xs font-semibold text-brand"
+              >
+                {city}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
       <a
-        href={businessInfo.mapsUrl}
+        href={businessInfo.reviewsUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative block h-56 overflow-hidden rounded-2xl border border-border bg-[repeating-linear-gradient(45deg,#F4F2EC_0,#F4F2EC_12px,#FBFAF7_12px,#FBFAF7_24px)] transition-colors hover:border-terracotta-border"
+        className="flex items-center gap-3 rounded-2xl border border-terracotta-border bg-terracotta-tint px-5 py-4 transition-colors hover:bg-terracotta-tint/60"
       >
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2.5">
-          <MapPin className="h-7 w-7 text-terracotta" aria-hidden="true" />
-          <span className="font-display text-xs tracking-wide text-muted-foreground">
-            Toronto &amp; GTA
-          </span>
-          <span className="text-sm font-semibold text-brand underline-offset-4 group-hover:underline">
-            Get Directions &rarr;
-          </span>
-        </div>
-      </a>
-
-      <div className="flex items-center gap-3 rounded-2xl border border-terracotta-border bg-terracotta-tint px-5 py-4">
         <span className="flex gap-0.5 text-terracotta" aria-hidden="true">
           {Array.from({ length: 5 }).map((_, i) => (
             <Star key={i} className="h-3.5 w-3.5 fill-current" />
@@ -82,7 +106,7 @@ export function ContactInfo() {
           {businessInfo.rating.value.toFixed(1)} &middot; Rated by {businessInfo.rating.count} Google
           Reviews
         </span>
-      </div>
+      </a>
     </div>
   )
 }
