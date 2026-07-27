@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Phone, Star } from 'lucide-react'
+import { ArrowUpRight, Phone, Star } from 'lucide-react'
 import { Image } from '@/components/ui/image'
 import { businessInfo } from '@/lib/metadata'
 
@@ -53,9 +53,12 @@ export function Hero() {
           <div className="mt-9 flex flex-wrap gap-3.5">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 rounded-full bg-brand px-7 py-4 text-base font-semibold text-brand-foreground shadow-lg shadow-brand/20 transition-colors hover:bg-brand/90"
+              className="group inline-flex items-center gap-3 rounded-full bg-brand py-2 pl-7 pr-2 text-base font-semibold text-brand-foreground shadow-lg shadow-brand/20 transition-shadow hover:shadow-xl hover:shadow-brand/25"
             >
               Book a Consultation
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-terracotta transition-transform duration-300 group-hover:rotate-45">
+                <ArrowUpRight className="h-4 w-4 text-white" aria-hidden="true" />
+              </span>
             </Link>
             <a
               href={`tel:${businessInfo.phone}`}
@@ -65,12 +68,12 @@ export function Hero() {
             </a>
           </div>
 
-          <div className="mt-11 flex items-center gap-7 border-t border-border pt-7">
+          <div className="mt-11 flex flex-col gap-5 border-t border-border pt-7 sm:flex-row sm:items-center sm:gap-7">
             <div>
               <div className="font-display text-2xl font-semibold text-brand">Toronto &amp; GTA</div>
               <div className="mt-0.5 text-[13px] text-muted-foreground">Service Area</div>
             </div>
-            <div className="h-9 w-px bg-border" />
+            <div className="hidden h-9 w-px bg-border sm:block" />
             <div>
               <div className="font-display text-2xl font-semibold text-brand">
                 Buy &middot; Sell &middot; Invest
@@ -94,7 +97,7 @@ export function Hero() {
               sizes="(max-width: 1024px) 80vw, 360px"
               className="block h-auto w-full object-cover"
             />
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#081A31]/95 to-transparent px-5 pb-5 pt-8">
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#071F1C]/95 to-transparent px-5 pb-5 pt-8">
               <div className="font-display text-xl font-semibold text-white">Abishan Umashanker</div>
               <div className="mt-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-terracotta">
                 Realtor&reg; &middot; Toronto
