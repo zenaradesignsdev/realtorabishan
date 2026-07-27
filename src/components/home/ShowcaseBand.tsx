@@ -4,11 +4,11 @@ export function ShowcaseBand() {
   return (
     <section className="relative h-[380px] overflow-hidden sm:h-[440px]">
       <Image
-        src="/images/modern-living-room.jpg"
-        alt="Bright, modern living room with clean lines and natural light"
+        src="/images/pexels-19836798.jpg"
+        alt="Sunlit luxury living room with a warm neutral sofa, marble coffee table, and terracotta accent pillows"
         fill
         sizes="100vw"
-        className="object-cover object-center"
+        className="object-cover object-[50%_62%]"
       />
       <div className="absolute inset-0 bg-gradient-to-r from-brand/85 via-brand/50 to-brand/[0.08]" />
       <div className="relative mx-auto flex h-full max-w-6xl flex-col justify-center px-4 sm:px-6 lg:px-8">

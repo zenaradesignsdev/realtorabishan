@@ -83,6 +83,9 @@ Set in `src/lib/fonts.ts`.
   neighbourhood shots are licensed Pexels photos carried over from the design export
 - The export's `luxury-interior.jpg` was a Pngtree image (requires a paid commercial licence) —
   it was swapped for a vetted, licence-free Pexels photo (`pexels-34688219.jpg`) instead
+- Home page's `ShowcaseBand` ("From first homes to luxury listings") originally used
+  `modern-living-room.jpg`; swapped for `pexels-19836798.jpg` (licence-free Pexels photo,
+  warm-neutral living room with terracotta accents) for a more premium feel matching the palette
 - Set `priority` on the hero portrait/image per page (LCP element)
 - OG image: add a real `1200×630` asset at `public/og-image.jpg` before launch (currently missing —
   build/lint will not catch this, check manually)

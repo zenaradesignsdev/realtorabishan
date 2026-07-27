@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Phone } from 'lucide-react'
+import { ArrowUpRight, Phone } from 'lucide-react'
 import { Reveal } from '@/components/motion/Reveal'
 import { businessInfo } from '@/lib/metadata'
 import { cn } from '@/lib/cn'
@@ -14,7 +14,7 @@ export function CtaBand({ title, description, className }: CtaBandProps) {
   return (
     <section className={cn('px-4 py-20 sm:px-6 md:py-28 lg:px-8', className)}>
       <Reveal>
-        <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[28px] bg-gradient-to-br from-brand via-[#0E2C50] to-[#14365C] px-6 py-16 text-center sm:px-10 md:py-20">
+        <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[28px] bg-gradient-to-br from-brand via-[#114540] to-[#16544B] px-6 py-16 text-center sm:px-10 md:py-20">
           <div
             aria-hidden="true"
             className="absolute -left-10 -top-16 h-60 w-60 rounded-full border border-terracotta/25"
@@ -33,9 +33,12 @@ export function CtaBand({ title, description, className }: CtaBandProps) {
             <div className="mt-9 flex flex-wrap justify-center gap-3.5">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 rounded-full bg-terracotta-solid px-7 py-4 text-base font-bold text-white hover:bg-terracotta-solid/90"
+                className="group inline-flex items-center gap-3 rounded-full bg-terracotta-solid py-2 pl-7 pr-2 text-base font-bold text-white transition-shadow hover:shadow-lg hover:shadow-black/20"
               >
                 Book a Consultation
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand transition-transform duration-300 group-hover:rotate-45">
+                  <ArrowUpRight className="h-4 w-4 text-white" aria-hidden="true" />
+                </span>
               </Link>
               <a
                 href={`tel:${businessInfo.phone}`}
