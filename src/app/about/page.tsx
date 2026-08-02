@@ -3,6 +3,7 @@ import { generateMetadata as buildMetadata } from '@/lib/metadata'
 import { AboutHero } from '@/components/about/AboutHero'
 import { ValuesGrid } from '@/components/about/ValuesGrid'
 import { TrustSection } from '@/components/about/TrustSection'
+import { AwardsSection } from '@/components/about/AwardsSection'
 import { Testimonials } from '@/components/shared/Testimonials'
 import { CtaBand } from '@/components/shared/CtaBand'
 import { TESTIMONIALS } from '@/lib/testimonials'
@@ -20,6 +21,7 @@ export default function AboutPage() {
       <AboutHero />
       <ValuesGrid />
       <TrustSection />
+      <AwardsSection />
       <Testimonials
         items={TESTIMONIALS.slice(2)}
         eyebrow="In Their Words"

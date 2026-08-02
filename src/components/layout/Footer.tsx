@@ -75,6 +75,17 @@ export function Footer() {
                 Realtor.ca profile
               </a>
             </li>
+            <li>
+              <a
+                href={businessInfo.rankMyAgentUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 py-2 hover:text-white"
+              >
+                <ExternalLink className="h-4 w-4 shrink-0 text-terracotta" aria-hidden="true" />
+                RankMyAgent profile
+              </a>
+            </li>
             <li className="flex items-start gap-2 py-2">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-terracotta" aria-hidden="true" />
               <address className="not-italic">

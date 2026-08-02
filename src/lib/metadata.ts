@@ -16,6 +16,8 @@ export const businessInfo = {
   postalCode: 'M1B 3C3',
   realtorProfileUrl:
     'https://www.realtor.ca/agent/2198342/abishan-umashanker-d2-795-milner-avenue-toronto-ontario-m1b3c3',
+  rankMyAgentUrl: 'https://rankmyagent.com/abishan-umashanker',
+  rentalManagementUrl: 'https://airfvh.com',
   mapsUrl:
     'https://www.google.com/maps/search/?api=1&query=795+Milner+Avenue+Toronto+ON+M1B+3C3',
   // No Google Cloud project is set up for this client, so the review count/rating

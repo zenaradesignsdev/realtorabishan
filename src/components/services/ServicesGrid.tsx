@@ -1,5 +1,7 @@
+import { ArrowUpRight } from 'lucide-react'
 import { Reveal } from '@/components/motion/Reveal'
 import { cn } from '@/lib/cn'
+import { businessInfo } from '@/lib/metadata'
 import type { Service } from '@/types'
 
 const SERVICES: Service[] = [
@@ -19,6 +21,13 @@ const SERVICES: Service[] = [
       'Patient, step-by-step support for your first purchase, from understanding budgets and programs to keys in hand.',
   },
   {
+    title: 'Property Management',
+    description:
+      'Connect with the right resources to keep your investment well-managed, occupied, and performing.',
+    linkHref: businessInfo.rentalManagementUrl,
+    linkLabel: 'Visit AirFVH',
+  },
+  {
     title: 'Commercial Real Estate',
     description:
       'Support for office, retail, and mixed-use transactions, balancing location, cash flow, and long-term strategy.',
@@ -36,12 +45,7 @@ const SERVICES: Service[] = [
   {
     title: 'Property Rentals',
     description:
-      'Help for tenants and landlords alike, matching the right people with the right space and lease terms.',
-  },
-  {
-    title: 'Property Management',
-    description:
-      'Connect with the right resources to keep your investment well-managed, occupied, and performing.',
+      'Help for tenants and landlords alike, including short-term and long-term rental management, matching the right people with the right space and lease terms.',
   },
 ]
 
@@ -83,6 +87,20 @@ export function ServicesGrid() {
                 <p className="mt-3 max-w-md text-base leading-relaxed text-muted-foreground lg:pl-[52px]">
                   {service.description}
                 </p>
+                {service.linkHref && (
+                  <a
+                    href={service.linkHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group/link mt-4 inline-flex items-center gap-2 rounded-full bg-terracotta-solid px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-300 hover:bg-terracotta-solid/90 lg:ml-[52px]"
+                  >
+                    {service.linkLabel}
+                    <ArrowUpRight
+                      className="h-3.5 w-3.5 transition-transform duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+                      aria-hidden="true"
+                    />
+                  </a>
+                )}
               </div>
             </Reveal>
           )

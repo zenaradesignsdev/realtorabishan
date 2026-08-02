@@ -6,6 +6,8 @@ export interface NavLink {
 export interface Service {
   title: string
   description: string
+  linkHref?: string
+  linkLabel?: string
 }
 
 export interface ValueItem {
