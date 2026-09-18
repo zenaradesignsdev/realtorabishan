@@ -28,10 +28,34 @@ export const businessInfo = {
   rating: { value: 5.0, count: 46 },
 } as const
 
+/**
+ * The canonical origin, with no trailing slash.
+ *
+ * Order matters. `NEXT_PUBLIC_SITE_URL` is the explicit answer and always wins.
+ * Failing that, Vercel exposes the project's *stable production* domain to every
+ * deployment including previews — so a preview build still emits canonicals and
+ * OG URLs pointing at production rather than at its own throwaway hostname,
+ * which is what stops previews competing with the real site in search results.
+ * The literal is only a local-build fallback and is not the confirmed domain.
+ */
+function resolveSiteUrl(): string {
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL
+  if (explicit) return explicit.replace(/\/+$/, '')
+
+  // The NEXT_PUBLIC_ copy is the one that survives into the client bundle; the
+  // bare name is only readable on the server. Check both.
+  const vercelDomain =
+    process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL ??
+    process.env.VERCEL_PROJECT_PRODUCTION_URL
+  if (vercelDomain) return `https://${vercelDomain}`
+
+  return 'https://theleaseman.ca'
+}
+
 export const siteConfig = {
   name: 'Abishan Umashanker, Realtor®',
   description: `Abishan Umashanker is a Toronto-based REALTOR® focused on leasing across the GTA — matching tenants with the right rental and landlords with the right tenants, plus buying and selling representation. Rated ${businessInfo.rating.value.toFixed(1)} across ${businessInfo.rating.count} Google reviews.`,
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://theleaseman.ca',
+  url: resolveSiteUrl(),
   ogImage: '/og-image.jpg',
   locale: 'en_CA',
 } as const
