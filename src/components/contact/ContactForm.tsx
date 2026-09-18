@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import { Check } from 'lucide-react'
+import { ArrowUpRight, Check } from 'lucide-react'
 import { contactSchema, INTEREST_OPTIONS, type ContactFormValues } from './contact.schema'
 import { businessInfo } from '@/lib/metadata'
 import {
@@ -18,20 +18,20 @@ import {
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { NativeSelect } from '@/components/ui/native-select'
-import { Button } from '@/components/ui/button'
 
-async function submitContactForm(data: ContactFormValues): Promise<void> {
-  const response = await fetch('/api/contact', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
-  })
+/**
+ * Underlined fields rather than boxed ones — boxes would reintroduce exactly
+ * the bordered-card look the rest of the page avoids. The shadcn primitives are
+ * left untouched and restyled through className, so the base components stay
+ * upgradeable.
+ *
+ * The default focus ring is deliberately kept: an underline colour change alone
+ * is not a reliable focus indicator.
+ */
+const FIELD =
+  'h-12 rounded-none border-0 border-b border-brand/15 bg-transparent px-0 text-base text-brand placeholder:text-brand/30 focus-visible:border-terracotta-solid aria-[invalid=true]:border-destructive md:text-base'
 
-  if (!response.ok) {
-    const body = await response.json().catch(() => ({}))
-    throw new Error((body as { error?: string }).error ?? 'Failed to send message')
-  }
-}
+const LABEL = 'type-label text-brand/45'
 
 export function ContactForm() {
   const form = useForm<ContactFormValues>({
@@ -52,7 +52,18 @@ export function ContactForm() {
     isSuccess,
     reset: resetMutation,
   } = useMutation({
-    mutationFn: submitContactForm,
+    mutationFn: async (data: ContactFormValues) => {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+
+      if (!response.ok) {
+        const body = await response.json().catch(() => ({}))
+        throw new Error((body as { error?: string }).error ?? 'Failed to send message')
+      }
+    },
     onSuccess: () => {
       toast.success('Message sent — Abishan will be in touch shortly.')
     },
@@ -65,14 +76,18 @@ export function ContactForm() {
 
   if (isSuccess) {
     return (
-      <div className="rounded-[22px] border border-border bg-white p-10 text-center shadow-sm sm:p-12">
-        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-brand">
-          <Check className="h-7 w-7 text-terracotta" aria-hidden="true" />
+      <div className="border rule bg-white p-9 sm:p-12">
+        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-brand">
+          <Check className="h-6 w-6 text-terracotta" aria-hidden="true" />
         </div>
-        <h3 className="font-display text-2xl font-semibold text-brand">Thank you, {firstName}</h3>
-        <p className="mx-auto mt-2.5 max-w-sm text-base leading-relaxed text-muted-foreground">
-          Your message has been noted. Abishan will reach out shortly. For anything urgent, call{' '}
-          <a href={`tel:${businessInfo.phone}`} className="font-semibold text-brand underline">
+        <h2 className="type-heading mt-7 text-3xl text-brand">Thank you, {firstName}.</h2>
+        <p className="mt-4 max-w-sm text-base leading-[1.75] text-muted-foreground">
+          Your message is in. Abishan will reach out shortly &mdash; usually the same day. For
+          anything urgent, call{' '}
+          <a
+            href={`tel:${businessInfo.phone}`}
+            className="font-semibold text-brand underline decoration-terracotta underline-offset-4"
+          >
             {businessInfo.phoneDisplay}
           </a>
           .
@@ -83,7 +98,7 @@ export function ContactForm() {
             form.reset()
             resetMutation()
           }}
-          className="mt-6 rounded-full border-[1.5px] border-terracotta-border px-6 py-3 text-sm font-semibold text-brand"
+          className="mt-8 rounded-full border border-brand/20 px-6 py-3.5 text-sm font-semibold text-brand transition-colors hover:border-brand/50"
         >
           Send another message
         </button>
@@ -92,17 +107,17 @@ export function ContactForm() {
   }
 
   return (
-    <div className="rounded-[22px] border border-border bg-white p-8 shadow-sm sm:p-10">
-      <h2 className="font-display text-2xl font-semibold text-brand">Send a message</h2>
-      <p className="mt-1.5 text-sm text-muted-foreground">
-        Fields marked with an asterisk are required.
-      </p>
+    <div className="border rule bg-white p-7 sm:p-10 lg:p-12">
+      <p className="type-label text-terracotta-ink">Send a message</p>
+      <h2 className="type-heading mt-5 text-[1.9rem] text-brand sm:text-[2.3rem]">
+        What are you looking for?
+      </h2>
 
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit((data) => mutate(data))}
           noValidate
-          className="relative mt-7 space-y-5"
+          className="relative mt-10 space-y-7"
         >
           {/* Honeypot — hidden from real users, bots fill it, server rejects those submissions */}
           <div aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
@@ -116,15 +131,20 @@ export function ContactForm() {
             />
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2">
+          <div className="grid gap-7 sm:grid-cols-2">
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Full name *</FormLabel>
+                  <FormLabel className={LABEL}>Full name *</FormLabel>
                   <FormControl>
-                    <Input placeholder="Your name" autoComplete="name" {...field} />
+                    <Input
+                      placeholder="Your name"
+                      autoComplete="name"
+                      className={FIELD}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -136,9 +156,16 @@ export function ContactForm() {
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone</FormLabel>
+                  <FormLabel className={LABEL}>Phone</FormLabel>
                   <FormControl>
-                    <Input type="tel" placeholder="(000) 000-0000" autoComplete="tel" {...field} />
+                    <Input
+                      type="tel"
+                      inputMode="tel"
+                      placeholder="(000) 000-0000"
+                      autoComplete="tel"
+                      className={FIELD}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -151,9 +178,16 @@ export function ContactForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email *</FormLabel>
+                <FormLabel className={LABEL}>Email *</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="you@email.com" autoComplete="email" {...field} />
+                  <Input
+                    type="email"
+                    inputMode="email"
+                    placeholder="you@email.com"
+                    autoComplete="email"
+                    className={FIELD}
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -165,9 +199,9 @@ export function ContactForm() {
             name="interest"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>I&rsquo;m interested in *</FormLabel>
+                <FormLabel className={LABEL}>I&rsquo;m interested in *</FormLabel>
                 <FormControl>
-                  <NativeSelect {...field}>
+                  <NativeSelect className={`${FIELD} pr-9`} {...field}>
                     <option value="">Select a service&hellip;</option>
                     {INTEREST_OPTIONS.map((option) => (
                       <option key={option.value} value={option.value}>
@@ -186,12 +220,12 @@ export function ContactForm() {
             name="message"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Message *</FormLabel>
+                <FormLabel className={LABEL}>Message *</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Tell me a bit about your goals, timeline, and any questions you have…"
+                    placeholder="Area, budget, timing, and anything you will not compromise on…"
                     rows={5}
-                    className="resize-none"
+                    className="min-h-[8rem] resize-none rounded-none border-0 border-b border-brand/15 bg-transparent px-0 py-3 text-base leading-relaxed text-brand placeholder:text-brand/30 focus-visible:border-terracotta-solid aria-[invalid=true]:border-destructive md:text-base"
                     {...field}
                   />
                 </FormControl>
@@ -200,18 +234,23 @@ export function ContactForm() {
             )}
           />
 
-          <Button
-            type="submit"
-            size="lg"
-            disabled={isPending}
-            className="w-full rounded-xl bg-brand text-base font-semibold hover:bg-brand/90 sm:w-auto"
-          >
-            {isPending ? 'Sending…' : 'Send Message'}
-          </Button>
-          <p className="text-center text-xs text-muted-foreground">
-            By submitting, you agree to be contacted about your inquiry. Your details are never
-            shared.
-          </p>
+          <div className="flex flex-col gap-5 pt-2 sm:flex-row sm:items-center sm:justify-between">
+            <button
+              type="submit"
+              disabled={isPending}
+              className="group inline-flex items-center justify-between gap-4 rounded-full bg-brand py-2 pl-7 pr-2 text-white transition-colors duration-300 hover:bg-ink disabled:opacity-60 sm:justify-start"
+            >
+              <span className="text-base font-semibold">
+                {isPending ? 'Sending…' : 'Send message'}
+              </span>
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-terracotta transition-transform duration-500 ease-out group-hover:rotate-45">
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              </span>
+            </button>
+            <p className="max-w-[16rem] text-xs leading-relaxed text-muted-foreground">
+              Your details are used to reply to this enquiry and are never shared.
+            </p>
+          </div>
         </form>
       </Form>
     </div>

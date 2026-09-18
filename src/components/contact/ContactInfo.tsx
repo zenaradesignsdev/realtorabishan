@@ -1,112 +1,98 @@
-import { ExternalLink, MapPin, Phone, Star } from 'lucide-react'
+import { ArrowUpRight, MapPin, Phone, Star } from 'lucide-react'
+import { Reveal } from '@/components/motion/Reveal'
 import { businessInfo } from '@/lib/metadata'
-
-const SERVICE_AREA_CITIES = [
-  'Toronto',
-  'Scarborough',
-  'North York',
-  'Etobicoke',
-  'Markham',
-  'Vaughan',
-  'Richmond Hill',
-  'Mississauga',
-  'Brampton',
-  'Pickering',
-  'Ajax',
-  'Whitby',
-] as const
+import { SERVICE_AREAS } from '@/lib/services'
 
 export function ContactInfo() {
   return (
-    <div className="flex flex-col gap-4">
-      <a
-        href={`tel:${businessInfo.phone}`}
-        className="flex items-center gap-4 rounded-2xl border border-border bg-surface px-6 py-5 transition-colors hover:border-terracotta-border"
-      >
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand">
-          <Phone className="h-5 w-5 text-terracotta" aria-hidden="true" />
-        </span>
-        <span>
-          <span className="block text-xs font-semibold uppercase tracking-[0.1em] text-muted-foreground">
-            Call or Text
-          </span>
-          <span className="mt-0.5 block font-display text-lg font-semibold text-brand">
-            {businessInfo.phoneDisplay}
-          </span>
-        </span>
-      </a>
+    <div className="flex flex-col">
+      <Reveal travel={0}>
+        <p className="type-label text-terracotta-ink">Direct</p>
+      </Reveal>
 
-      <a
-        href={businessInfo.realtorProfileUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-4 rounded-2xl border border-border bg-surface px-6 py-5 transition-colors hover:border-terracotta-border"
-      >
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand">
-          <ExternalLink className="h-5 w-5 text-terracotta" aria-hidden="true" />
-        </span>
-        <span>
-          <span className="block text-xs font-semibold uppercase tracking-[0.1em] text-muted-foreground">
-            Profile
+      <Reveal delay={0.05}>
+        <a
+          href={`tel:${businessInfo.phone}`}
+          className="group flex items-start gap-5 border-b rule py-7"
+        >
+          <Phone className="mt-1 h-5 w-5 shrink-0 text-terracotta-solid" aria-hidden="true" />
+          <span>
+            <span className="type-label block text-brand/40">Call or text</span>
+            <span className="type-heading mt-2 block text-2xl text-brand transition-colors group-hover:text-terracotta-ink">
+              {businessInfo.phoneDisplay}
+            </span>
+            <span className="mt-1.5 block text-sm text-muted-foreground">
+              Any day &mdash; text is often fastest.
+            </span>
           </span>
-          <span className="mt-0.5 block font-display text-lg font-semibold text-brand">
-            Realtor.ca profile &rarr;
-          </span>
-        </span>
-      </a>
+        </a>
+      </Reveal>
 
-      <div className="flex items-center gap-4 rounded-2xl border border-border bg-surface px-6 py-5">
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand">
-          <MapPin className="h-5 w-5 text-terracotta" aria-hidden="true" />
-        </span>
-        <address className="not-italic">
-          <span className="block text-xs font-semibold uppercase tracking-[0.1em] text-muted-foreground">
-            Office
-          </span>
-          <span className="mt-0.5 block font-display text-base font-semibold text-brand">
-            {businessInfo.streetAddress}, {businessInfo.addressLocality}, {businessInfo.addressRegion}
-          </span>
-          <span className="mt-0.5 block text-sm text-muted-foreground">{businessInfo.brokerage}</span>
-        </address>
-      </div>
-
-      <div className="flex items-start gap-4 rounded-2xl border border-border bg-surface px-6 py-5">
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand">
-          <MapPin className="h-5 w-5 text-terracotta" aria-hidden="true" />
-        </span>
-        <div>
-          <span className="block text-xs font-semibold uppercase tracking-[0.1em] text-muted-foreground">
-            Service Area
-          </span>
-          <div className="mt-2.5 flex flex-wrap gap-1.5">
-            {SERVICE_AREA_CITIES.map((city) => (
-              <span
-                key={city}
-                className="rounded-full border border-border bg-white px-3 py-1 text-xs font-semibold text-brand"
-              >
-                {city}
-              </span>
-            ))}
-          </div>
+      <Reveal delay={0.09}>
+        <div className="flex items-start gap-5 border-b rule py-7">
+          <MapPin className="mt-1 h-5 w-5 shrink-0 text-terracotta-solid" aria-hidden="true" />
+          <address className="not-italic">
+            <span className="type-label block text-brand/40">Office</span>
+            <span className="type-heading mt-2 block text-lg text-brand">
+              {businessInfo.streetAddress}
+            </span>
+            <span className="mt-1 block text-sm text-muted-foreground">
+              {businessInfo.addressLocality}, {businessInfo.addressRegion}{' '}
+              {businessInfo.postalCode}
+              <br />
+              {businessInfo.brokerage}
+            </span>
+            <a
+              href={businessInfo.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group -mb-3 mt-0.5 inline-flex min-h-[44px] items-center gap-1.5 py-3 text-sm font-semibold text-brand"
+            >
+              <span className="border-b border-terracotta pb-0.5">Open in Maps</span>
+              <ArrowUpRight
+                className="h-3.5 w-3.5 text-terracotta transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                aria-hidden="true"
+              />
+            </a>
+          </address>
         </div>
-      </div>
+      </Reveal>
 
-      <a
-        href={businessInfo.reviewsUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-3 rounded-2xl border border-terracotta-border bg-terracotta-tint px-5 py-4 transition-colors hover:bg-terracotta-tint/60"
-      >
-        <span className="flex gap-0.5 text-terracotta" aria-hidden="true">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <Star key={i} className="h-3.5 w-3.5 fill-current" />
-          ))}
-        </span>
-        <span className="text-sm font-semibold text-terracotta-ink">
-          {businessInfo.rating.value.toFixed(1)} &middot; Rated by {businessInfo.rating.count} Google
-          Reviews
-        </span>
-      </a>
+      <Reveal delay={0.13}>
+        <a
+          href={businessInfo.reviewsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group flex items-start gap-5 border-b rule py-7"
+        >
+          <Star className="mt-1 h-5 w-5 shrink-0 fill-current text-terracotta-solid" aria-hidden="true" />
+          <span>
+            <span className="type-label block text-brand/40">Reputation</span>
+            <span className="type-heading mt-2 block text-2xl text-brand transition-colors group-hover:text-terracotta-ink">
+              {businessInfo.rating.value.toFixed(1)} from {businessInfo.rating.count} reviews
+            </span>
+            <span className="mt-1.5 block text-sm text-muted-foreground">
+              Read every one of them on Google.
+            </span>
+          </span>
+        </a>
+      </Reveal>
+
+      <Reveal delay={0.17}>
+        <div className="py-7">
+          <p className="type-label text-brand/40">Where he works</p>
+          <ul className="mt-4 flex flex-wrap gap-x-1.5 gap-y-1.5">
+            {SERVICE_AREAS.map((area) => (
+              <li
+                key={area}
+                className="rounded-full border rule px-3.5 py-1.5 text-[13px] font-medium text-brand/75"
+              >
+                {area}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Reveal>
     </div>
   )
 }

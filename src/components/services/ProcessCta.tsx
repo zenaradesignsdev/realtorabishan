@@ -1,63 +1,77 @@
-import Link from 'next/link'
 import { Reveal } from '@/components/motion/Reveal'
+import { WordReveal } from '@/components/motion/WordReveal'
 import type { ProcessStep } from '@/types'
 
 const STEPS: ProcessStep[] = [
   {
-    step: '1',
-    title: 'Consultation',
-    description: 'We talk through your goals and the current market.',
+    step: '01',
+    title: 'The call',
+    description:
+      'Fifteen minutes on what you need, when you need it by, and what the number actually is. No pitch, and nothing to sign.',
   },
   {
-    step: '2',
-    title: 'Strategy',
-    description: 'A clear, tailored plan with timelines and next steps.',
+    step: '02',
+    title: 'The plan',
+    description:
+      'A shortlist, a price, or a strategy — with the reasoning attached, so you can disagree with it before anyone acts on it.',
   },
   {
-    step: '3',
-    title: 'Results',
-    description: 'Steady representation through to a successful close.',
+    step: '03',
+    title: 'The work',
+    description:
+      'Showings, applications, offers, and paperwork, handled by the same person you spoke to on day one, through to the keys.',
   },
 ]
 
 export function ProcessCta() {
   return (
-    <section className="border-t border-border bg-surface">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-4 py-20 sm:px-6 md:py-24 lg:grid-cols-2 lg:gap-16 lg:px-8">
-        <Reveal>
-          <h2 className="font-display text-3xl font-semibold leading-tight tracking-tight text-brand sm:text-4xl">
-            Not sure where to start?
-          </h2>
-          <p className="mt-4 text-[17px] leading-relaxed text-muted-foreground">
-            Every situation is different. Book a consultation and we will map out a clear plan
-            around your goals, timeline, and budget, with no obligation.
-          </p>
-          <Link
-            href="/contact"
-            className="mt-7 inline-flex items-center gap-2 rounded-full bg-brand px-7 py-4 text-base font-semibold text-brand-foreground hover:bg-brand/90"
-          >
-            Book a Consultation
-          </Link>
-        </Reveal>
-
-        <Reveal delay={0.1} className="flex flex-col gap-4">
-          {STEPS.map((item) => (
-            <div
-              key={item.step}
-              className="flex items-start gap-4 rounded-2xl border border-border bg-white p-5"
+    <section className="bg-ink">
+      <div className="mx-auto max-w-shell px-5 py-20 sm:px-8 md:py-28 lg:px-12">
+        <div className="grid grid-cols-1 gap-8 border-b rule-dark pb-12 lg:grid-cols-[1fr_0.8fr] lg:items-end lg:gap-16">
+          <div>
+            <Reveal travel={0}>
+              <p className="type-label text-terracotta">How it goes</p>
+            </Reveal>
+            <WordReveal
+              as="h2"
+              className="type-heading mt-6 text-[2.1rem] text-white xs:text-[2.4rem] sm:text-5xl lg:text-[3.4rem]"
             >
-              <div className="font-display text-xl font-bold text-terracotta">{item.step}</div>
-              <div>
-                <div className="mb-1 font-display text-base font-semibold text-brand">
+              Three steps, no surprises.
+            </WordReveal>
+          </div>
+          <Reveal delay={0.1}>
+            <p className="text-base leading-[1.75] text-white/55 sm:text-[17px]">
+              Whether it is a lease or a purchase, it runs the same way &mdash; and you always know
+              which step you are on.
+            </p>
+          </Reveal>
+        </div>
+
+        <ol className="grid grid-cols-1 md:grid-cols-3">
+          {STEPS.map((item, i) => (
+            <Reveal
+              key={item.step}
+              delay={i * 0.08}
+              className={i < STEPS.length - 1 ? 'rule-dark md:border-r' : ''}
+            >
+              <li
+                className={`border-b rule-dark py-10 md:border-b-0 md:py-14 ${
+                  i === 0 ? 'md:pr-10' : i === STEPS.length - 1 ? 'md:pl-10' : 'md:px-10'
+                }`}
+              >
+                <span className="type-display block text-5xl text-white/15 sm:text-6xl">
+                  {item.step}
+                </span>
+                <h3 className="type-heading mt-6 text-2xl text-white sm:text-[1.9rem]">
                   {item.title}
-                </div>
-                <div className="text-sm leading-relaxed text-muted-foreground">
+                </h3>
+                <p className="mt-4 max-w-sm text-base leading-[1.8] text-white/55">
                   {item.description}
-                </div>
-              </div>
-            </div>
+                </p>
+              </li>
+            </Reveal>
           ))}
-        </Reveal>
+        </ol>
       </div>
     </section>
   )

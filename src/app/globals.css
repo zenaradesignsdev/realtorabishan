@@ -46,6 +46,16 @@
     /* ─── Warm cream surface — alternating section backgrounds ─── */
     --surface: 45 33% 98%;
 
+    /* ─── Dark editorial ground ───
+       The dark bands are not one flat fill. `ink` is the near-black floor,
+       `teal-950` the body of a dark section, `teal-700` the lifted edge a
+       gradient runs toward. Layering all three is what stops a large dark
+       area reading as a solid rectangle. */
+    --ink: 174 50% 4%;
+    --ink-muted: 172 22% 62%;
+    --teal-950: 172 52% 8%;
+    --teal-700: 172 58% 20%;
+
     /* ─── Font CSS variables — injected via html className in layout.tsx ─── */
     /* --font-sans: Manrope (body) · --font-display: Space Grotesk (headings) */
   }
@@ -54,14 +64,90 @@
     @apply border-border;
   }
 
+  /*
+   * `overflow-x` belongs on <html> ONLY. Overflow set on the root element
+   * propagates to the viewport (so horizontal overflow is still clipped
+   * document-wide) and the root itself computes back to `visible`.
+   *
+   * Repeating it on <body> is not redundant — it is actively harmful. Once
+   * the root's overflow is non-visible, <body> keeps its own value and
+   * becomes a scroll container, which makes it the nearest scrollport for
+   * every `position: sticky` descendant. Because <body> is as tall as the
+   * document, that scrollport scrolls away with the page and the sticky
+   * header never pins. Do not add `overflow-x-hidden` back to <body>.
+   */
   html {
-    @apply scroll-smooth overflow-x-hidden;
+    @apply overflow-x-hidden scroll-smooth;
   }
 
   body {
-    @apply bg-background font-sans text-foreground antialiased overflow-x-hidden;
+    @apply bg-background font-sans text-foreground antialiased;
   }
 
+  /*
+   * Fraunces is variable on four axes. `wght` is handled by Tailwind's
+   * font-weight utilities; the other three are set here per type role,
+   * because the right value genuinely differs by size:
+   *
+   *   opsz — optical size. High values thin the hairlines and tighten the
+   *          joins, which is what a 72px headline needs and what a 12px
+   *          label must not have.
+   *   SOFT — corner softening. Kept at 0 throughout; any softness pushes
+   *          Fraunces toward its playful "Funk" personality.
+   *   WONK — swaps in the quirky single-storey g / splayed y. Off. It is
+   *          charming and completely wrong for a trust-critical brand.
+   */
+  .font-display {
+    font-variation-settings:
+      'SOFT' 0,
+      'WONK' 0,
+      'opsz' 32;
+  }
+}
+
+@layer components {
+  /* Display type at headline sizes — high optical size, tight tracking. */
+  .type-display {
+    @apply font-display font-normal;
+    font-variation-settings:
+      'SOFT' 0,
+      'WONK' 0,
+      'opsz' 144;
+    letter-spacing: -0.028em;
+    line-height: 1.02;
+  }
+
+  /* Section headings — one step down from a page headline. */
+  .type-heading {
+    @apply font-display font-normal;
+    font-variation-settings:
+      'SOFT' 0,
+      'WONK' 0,
+      'opsz' 96;
+    letter-spacing: -0.022em;
+    line-height: 1.08;
+  }
+
+  /* Small caps metadata: eyebrows, index numbers, field labels. */
+  .type-label {
+    @apply font-sans text-[11px] font-semibold uppercase leading-none tracking-label;
+  }
+
+  /*
+   * The hairline rule that carries the editorial layouts. Sections stack
+   * against these instead of against card borders — it is the single change
+   * that most separates this from a bordered-card template.
+   */
+  .rule {
+    @apply border-brand/10;
+  }
+
+  .rule-dark {
+    @apply border-white/[0.14];
+  }
+}
+
+@layer base {
   /*
    * Faint paper-grain texture — a fixed, non-scrolling overlay (repaints once,
    * never on scroll) that keeps large flat colour fields from reading as bare

@@ -1,7 +1,12 @@
-import { Manrope, Space_Grotesk } from 'next/font/google'
+import { Fraunces, Manrope } from 'next/font/google'
 
 /**
- * Body: Manrope · Display: Space Grotesk — matches the approved design export.
+ * Display: Fraunces · Body: Manrope.
+ *
+ * Fraunces is loaded as a variable font with its optical-size, SOFT and WONK
+ * axes exposed so headings can be tuned per size — large display type wants a
+ * high `opsz` (thinner hairlines, tighter joins) while small caps labels want
+ * a low one. The `font-display-*` utilities in globals.css set those.
  */
 
 export const fontSans = Manrope({
@@ -10,9 +15,9 @@ export const fontSans = Manrope({
   display: 'swap',
 })
 
-export const fontDisplay = Space_Grotesk({
+export const fontDisplay = Fraunces({
   subsets: ['latin'],
   variable: '--font-display',
-  weight: ['500', '600', '700'],
   display: 'swap',
+  axes: ['SOFT', 'WONK', 'opsz'],
 })

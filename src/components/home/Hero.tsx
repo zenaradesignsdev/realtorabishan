@@ -1,123 +1,145 @@
 import Link from 'next/link'
-import { ArrowUpRight, Phone, Star } from 'lucide-react'
+import { ArrowUpRight, Star } from 'lucide-react'
 import { Image } from '@/components/ui/image'
+import { WordReveal } from '@/components/motion/WordReveal'
+import { Reveal } from '@/components/motion/Reveal'
 import { businessInfo } from '@/lib/metadata'
+
+const FACTS = [
+  { value: 'Leasing', label: 'The practice' },
+  { value: 'Toronto & GTA', label: 'Where' },
+  { value: 'Royal LePage Ignite', label: 'Brokerage' },
+] as const
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[#FFF6EE] via-[#FDF0E4] to-white">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-3/5 opacity-20 mix-blend-multiply [mask-image:linear-gradient(to_top,rgba(0,0,0,0.95)_0%,rgba(0,0,0,0)_92%)]"
-      >
+    <section className="relative isolate overflow-hidden bg-ink">
+      {/*
+        The skyline carries the whole hero, so it is the LCP element and loads
+        with priority. Everything above it is a gradient, not another image.
+      */}
+      <div aria-hidden="true" className="absolute inset-0">
         <Image
-          src="/images/toronto-skyline.jpg"
+          src="/images/pexels-2478248.jpg"
           alt=""
           fill
+          priority
+          // Not dimmed by an opacity class like the other three heroes — this
+          // is the most visible photograph on the site, so it only steps down
+          // to 70 rather than the 55 the veiled backgrounds use.
+          quality={70}
           sizes="100vw"
-          className="object-cover object-bottom"
+          className="object-cover object-center"
         />
+        {/*
+          Three stacked washes rather than one flat scrim: a vertical fade so
+          the fixed header has something to sit on, a left-weighted fade so the
+          headline column stays legible over the bright downtown core, and a
+          bottom fade into the ink floor so the section hands off to the next
+          one without a visible seam.
+        */}
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/85 via-ink/40 to-ink" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/70 to-ink/10" />
       </div>
-      <div
-        aria-hidden="true"
-        className="absolute -right-24 -top-36 h-[460px] w-[460px] rounded-full bg-[radial-gradient(circle,rgba(201,111,74,0.22)_0%,rgba(201,111,74,0)_70%)]"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute -bottom-20 -left-16 h-[340px] w-[340px] rounded-full bg-[radial-gradient(circle,rgba(14,59,54,0.14)_0%,rgba(14,59,54,0)_70%)]"
-      />
 
-      <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 lg:px-8">
-        <div>
-          <div className="mb-7 inline-flex items-center gap-2.5 rounded-full border border-terracotta-border bg-terracotta-tint px-4 py-2">
-            <span className="flex items-center gap-0.5 text-terracotta" aria-hidden="true">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} className="h-3.5 w-3.5 fill-current" />
-              ))}
-            </span>
-            <span className="text-[13px] font-semibold text-terracotta-ink">
-              {businessInfo.rating.value.toFixed(1)} &middot; Rated by {businessInfo.rating.count}{' '}
-              Google Reviews
-            </span>
-          </div>
+      <div className="relative mx-auto flex min-h-[100svh] max-w-shell flex-col justify-end px-5 pb-10 pt-32 short:min-h-0 short:pb-10 short:pt-24 sm:px-8 sm:pb-14 md:min-h-[92svh] md:pt-40 lg:px-12">
+        <div className="max-w-4xl">
+          <Reveal travel={0}>
+            <p className="type-label flex flex-wrap items-center gap-x-3 gap-y-2 text-terracotta">
+              <span className="inline-block h-px w-10 bg-terracotta align-middle" aria-hidden="true" />
+              Toronto &amp; the GTA
+              {/* The separator only makes sense when both halves share a line;
+                  below `sm` the label wraps and it would strand at the end. */}
+              <span className="hidden text-white/25 sm:inline" aria-hidden="true">
+                /
+              </span>
+              <span className="text-white/50">Leasing-first REALTOR&reg;</span>
+            </p>
+          </Reveal>
 
-          <h1 className="text-balance font-display text-4xl font-semibold leading-[1.08] tracking-tight text-brand sm:text-5xl lg:text-[54px]">
-            Your Trusted REALTOR&reg; for Buying, Selling &amp; Investing in Real Estate
-          </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-            Helping clients buy, sell, rent, and invest across Toronto and the GTA with clarity and
-            confidence. From first homes to investment portfolios, you get honest guidance and
-            steady representation at every step.
-          </p>
+          <WordReveal
+            as="h1"
+            delay={0.12}
+            className="type-display mt-7 text-[3.15rem] text-white short:mt-5 short:text-[2.8rem] xs:text-[3.6rem] sm:text-7xl lg:text-[6.5rem]"
+          >
+            Leasing, done properly.
+          </WordReveal>
 
-          <div className="mt-9 flex flex-wrap gap-3.5">
+          <Reveal delay={0.5} className="mt-8 max-w-xl">
+            <p className="text-lg leading-[1.7] text-white/65 sm:text-xl">
+              Most agents treat a lease as a small transaction. It is the roof over your head for
+              the next year, or the income on a unit you own &mdash; and it deserves the whole job.
+              Buying and selling get the same treatment when you are ready for them.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.62} className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <Link
               href="/contact"
-              className="group inline-flex items-center gap-3 rounded-full bg-brand py-2 pl-7 pr-2 text-base font-semibold text-brand-foreground shadow-lg shadow-brand/20 transition-shadow hover:shadow-xl hover:shadow-brand/25"
+              className="group inline-flex items-center justify-between gap-4 rounded-full bg-white py-2 pl-7 pr-2 text-brand transition-colors duration-300 hover:bg-terracotta hover:text-white sm:justify-start"
             >
-              Book a Consultation
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-terracotta transition-transform duration-300 group-hover:rotate-45">
-                <ArrowUpRight className="h-4 w-4 text-white" aria-hidden="true" />
+              <span className="text-base font-semibold">Start a conversation</span>
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand text-white transition-transform duration-500 ease-out group-hover:rotate-45">
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
               </span>
             </Link>
-            <a
-              href={`tel:${businessInfo.phone}`}
-              className="inline-flex items-center gap-2 rounded-full border-[1.5px] border-terracotta-border bg-white px-7 py-4 text-base font-semibold text-brand"
+            <Link
+              href="/services"
+              className="inline-flex items-center justify-center rounded-full border border-white/25 px-7 py-4 text-base font-semibold text-white transition-colors duration-300 hover:border-white/60"
             >
-              <Phone className="h-4 w-4 text-terracotta" aria-hidden="true" /> Call Now
+              See how leasing works
+            </Link>
+          </Reveal>
+        </div>
+
+        {/* Credential strip — the hero's baseline rule. */}
+        <Reveal delay={0.75} className="mt-14 border-t rule-dark pt-6 md:mt-20">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <a
+              href={businessInfo.reviewsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-4"
+            >
+              {/* Square headshot crop of the full-length portrait — a 48px
+                  circle taken from the 680×1020 original left the face far too
+                  small to read. */}
+              <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full border border-white/20">
+                <Image
+                  src="/images/abishan-avatar.webp"
+                  alt="Abishan Umashanker"
+                  fill
+                  sizes="48px"
+                  className="object-cover"
+                />
+              </span>
+              <span className="min-w-0">
+                <span className="flex items-center gap-2">
+                  <span className="flex gap-0.5 text-terracotta" aria-hidden="true">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className="h-3 w-3 fill-current" />
+                    ))}
+                  </span>
+                  <span className="text-sm font-semibold text-white">
+                    {businessInfo.rating.value.toFixed(1)}
+                  </span>
+                </span>
+                <span className="mt-1 block text-[13px] text-white/50 transition-colors group-hover:text-white/80">
+                  {businessInfo.rating.count} Google reviews
+                </span>
+              </span>
             </a>
-          </div>
 
-          <div className="mt-11 flex flex-col gap-5 border-t border-border pt-7 sm:flex-row sm:items-center sm:gap-7">
-            <div>
-              <div className="font-display text-2xl font-semibold text-brand">Toronto &amp; GTA</div>
-              <div className="mt-0.5 text-[13px] text-muted-foreground">Service Area</div>
-            </div>
-            <div className="hidden h-9 w-px bg-border sm:block" />
-            <div>
-              <div className="font-display text-2xl font-semibold text-brand">
-                Buy &middot; Sell &middot; Invest
-              </div>
-              <div className="mt-0.5 text-[13px] text-muted-foreground">
-                Full-Service Representation
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="relative mx-auto w-full max-w-[360px]">
-          <div className="absolute -inset-3.5 rounded-3xl border border-terracotta-border" aria-hidden="true" />
-          <div className="relative overflow-hidden rounded-2xl border border-terracotta/40 bg-brand shadow-2xl shadow-brand/25">
-            <Image
-              src="/images/abishan.webp"
-              alt="Abishan Umashanker, REALTOR®, standing portrait"
-              width={680}
-              height={1020}
-              priority
-              sizes="(max-width: 1024px) 80vw, 360px"
-              className="block h-auto w-full object-cover"
-            />
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#071F1C]/95 to-transparent px-5 pb-5 pt-8">
-              <div className="font-display text-xl font-semibold text-white">Abishan Umashanker</div>
-              <div className="mt-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-terracotta">
-                Realtor&reg; &middot; Toronto
-              </div>
-            </div>
-          </div>
-          <div className="absolute -right-5 top-8 rounded-2xl border border-border bg-white px-4 py-3.5 text-center shadow-xl">
-            <div className="font-display text-2xl font-bold leading-none text-brand">
-              {businessInfo.rating.value.toFixed(1)}
-            </div>
-            <div className="mt-1 flex justify-center gap-0.5 text-terracotta" aria-hidden="true">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} className="h-2.5 w-2.5 fill-current" />
+            <dl className="grid grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-3 lg:gap-x-14">
+              {FACTS.map((fact) => (
+                <div key={fact.label}>
+                  <dt className="type-label text-white/35">{fact.label}</dt>
+                  <dd className="type-heading mt-2 text-lg text-white sm:text-xl">{fact.value}</dd>
+                </div>
               ))}
-            </div>
-            <div className="mt-1 text-[10.5px] text-muted-foreground">
-              {businessInfo.rating.count} reviews
-            </div>
+            </dl>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   )

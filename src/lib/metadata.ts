@@ -30,8 +30,8 @@ export const businessInfo = {
 
 export const siteConfig = {
   name: 'Abishan Umashanker, Realtor®',
-  description: `Abishan Umashanker is a Toronto-based REALTOR® helping buyers, sellers, and investors move forward with confidence across the GTA. Rated ${businessInfo.rating.value.toFixed(1)} across ${businessInfo.rating.count} Google reviews.`,
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://abishanrealtor.ca',
+  description: `Abishan Umashanker is a Toronto-based REALTOR® focused on leasing across the GTA — matching tenants with the right rental and landlords with the right tenants, plus buying and selling representation. Rated ${businessInfo.rating.value.toFixed(1)} across ${businessInfo.rating.count} Google reviews.`,
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://theleaseman.ca',
   ogImage: '/og-image.jpg',
   locale: 'en_CA',
 } as const

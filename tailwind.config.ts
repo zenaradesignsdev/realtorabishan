@@ -8,6 +8,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        // Small-phone step. 360px devices get the tighter display size; the
+        // 390px+ majority get the larger one without waiting for `sm`.
+        xs: '400px',
+        // Landscape phones. Width breakpoints alone treat a 740x360 handset as
+        // a tablet, so it gets `sm:`/`md:` display type in a 360px-tall window
+        // and the headline eats the whole screen. This targets height instead.
+        short: { raw: '(max-height: 480px) and (orientation: landscape)' },
+      },
       fontFamily: {
         // Swap these CSS variables per client in fonts.ts + globals.css
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
@@ -64,6 +73,35 @@ const config: Config = {
         },
         // Warm cream section background
         surface: 'hsl(var(--surface))',
+        // Dark editorial ground — deepened teal ramp used by the dark bands
+        ink: {
+          DEFAULT: 'hsl(var(--ink))',
+          muted: 'hsl(var(--ink-muted))',
+        },
+        teal: {
+          950: 'hsl(var(--teal-950))',
+          700: 'hsl(var(--teal-700))',
+        },
+      },
+      maxWidth: {
+        shell: '82rem',
+      },
+      letterSpacing: {
+        label: '0.18em',
+      },
+      keyframes: {
+        marquee: {
+          from: { transform: 'translate3d(0, 0, 0)' },
+          to: { transform: 'translate3d(-50%, 0, 0)' },
+        },
+        'marquee-reverse': {
+          from: { transform: 'translate3d(-50%, 0, 0)' },
+          to: { transform: 'translate3d(0, 0, 0)' },
+        },
+      },
+      animation: {
+        marquee: 'marquee var(--marquee-duration, 40s) linear infinite',
+        'marquee-reverse': 'marquee-reverse var(--marquee-duration, 40s) linear infinite',
       },
       borderRadius: {
         lg: 'var(--radius)',

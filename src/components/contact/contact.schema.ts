@@ -1,14 +1,14 @@
 import { z } from 'zod'
 
 export const INTEREST_OPTIONS = [
+  { value: 'Leasing - tenant', label: 'Leasing — I am looking for a rental' },
+  { value: 'Leasing - landlord', label: 'Leasing — I have a property to lease' },
+  { value: 'Property management', label: 'Property management' },
+  { value: 'Commercial', label: 'Commercial leasing or sales' },
   { value: 'Buying', label: 'Buying a home' },
   { value: 'Selling', label: 'Selling a home' },
   { value: 'First-time buyer', label: 'First-time home buyer' },
-  { value: 'Commercial', label: 'Commercial real estate' },
-  { value: 'Investing', label: 'Real estate investing' },
   { value: 'New construction', label: 'New construction' },
-  { value: 'Rentals', label: 'Property rentals' },
-  { value: 'Property management', label: 'Property management' },
   { value: 'Other', label: 'Something else' },
 ] as const
 

@@ -50,3 +50,4 @@ secrets/
 
 # Claude Code local session settings — machine/user-specific, not shared
 .claude/settings.local.json
+.playwright-mcp/

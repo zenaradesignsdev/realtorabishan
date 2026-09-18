@@ -1,60 +1,87 @@
 import { Image } from '@/components/ui/image'
+import { Reveal } from '@/components/motion/Reveal'
+import { WordReveal } from '@/components/motion/WordReveal'
+import { businessInfo } from '@/lib/metadata'
 
 export function AboutHero() {
   return (
-    <section className="relative overflow-hidden border-b border-border bg-gradient-to-b from-[#EFF6F5] via-[#E8F2F0] to-white">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-3/5 opacity-[0.14] [mask-image:linear-gradient(to_top,rgba(0,0,0,0.9)_0%,rgba(0,0,0,0)_92%)]"
-      >
+    <section className="relative isolate overflow-hidden bg-ink">
+      <div aria-hidden="true" className="absolute inset-0">
+        {/* Veiled decorative background: it renders at 40% opacity under a
+            near-opaque ink gradient, so detail here is not recoverable by the
+            eye. q=55 costs about a third of q=85's bytes for no perceptible
+            difference. */}
         <Image
           src="/images/pexels-2478248.jpg"
           alt=""
           fill
+          quality={55}
           sizes="100vw"
-          className="object-cover object-center"
+          className="object-cover object-center opacity-40"
         />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink via-ink/70 to-ink" />
       </div>
-      <div
-        aria-hidden="true"
-        className="absolute -left-24 -top-28 h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(14,59,54,0.16)_0%,rgba(14,59,54,0)_70%)]"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute -bottom-16 -right-16 h-[300px] w-[300px] rounded-full bg-[radial-gradient(circle,rgba(201,111,74,0.14)_0%,rgba(201,111,74,0)_70%)]"
-      />
 
-      <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:px-8">
-        <div>
-          <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-terracotta">About</p>
-          <h1 className="text-balance font-display text-4xl font-semibold leading-tight tracking-tight text-brand sm:text-5xl">
-            Real estate guidance that puts you first
-          </h1>
-          <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-            Abishan Umashanker is a Toronto-based REALTOR&reg; helping buyers, sellers, and
-            investors move forward with confidence. His approach is simple: understand your goals,
-            give you straight answers, and represent your interests with care from the first
-            conversation to the final signature.
-          </p>
-          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            With a focus on the Toronto and GTA market, he combines current local knowledge with
-            patient, transparent communication, so you always know where things stand and what
-            comes next.
-          </p>
-        </div>
-        <div className="relative mx-auto w-full max-w-[340px]">
-          <div className="absolute -inset-3.5 rounded-3xl border border-terracotta-border" aria-hidden="true" />
-          <div className="relative overflow-hidden rounded-2xl border border-terracotta/40 bg-brand shadow-2xl shadow-brand/25">
-            <Image
-              src="/images/abishan.webp"
-              alt="Abishan Umashanker, REALTOR®, standing portrait"
-              width={680}
-              height={1020}
-              priority
-              sizes="(max-width: 1024px) 80vw, 340px"
-              className="block h-auto w-full object-cover"
-            />
+      <div className="relative mx-auto max-w-shell px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-44 lg:px-12">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-20">
+          <div>
+            <Reveal travel={0}>
+              <p className="type-label flex items-center gap-3 text-terracotta">
+                <span
+                  aria-hidden="true"
+                  className="inline-block h-px w-10 bg-terracotta align-middle"
+                />
+                About
+              </p>
+            </Reveal>
+
+            <WordReveal
+              as="h1"
+              delay={0.1}
+              className="type-display mt-7 text-[2.6rem] text-white short:mt-5 short:text-[2.3rem] xs:text-[3rem] sm:text-6xl lg:text-[4.5rem]"
+            >
+              The agent who reads the whole lease.
+            </WordReveal>
+
+            <Reveal delay={0.4} className="mt-8 max-w-xl">
+              <p className="text-lg leading-[1.7] text-white/65">
+                Abishan Umashanker is a Toronto REALTOR&reg; with{' '}
+                {businessInfo.brokerage.replace(' Brokerage', '')}, and leasing is what he does
+                most. Tenants who want a place that fits, landlords who want a tenant they can stop
+                thinking about &mdash; and buyers and sellers who want the same directness applied
+                to a bigger number.
+              </p>
+            </Reveal>
           </div>
+
+          <Reveal delay={0.2}>
+            <div className="relative aspect-[4/5] w-full max-w-md overflow-hidden rounded-sm border rule-dark lg:ml-auto">
+              <Image
+                src="/images/abishan.webp"
+                alt="Abishan Umashanker, REALTOR®, standing portrait"
+                fill
+                priority
+                sizes="(max-width: 1024px) 92vw, 420px"
+                className="object-cover object-top"
+              />
+              {/* The portrait was shot on a white studio backdrop, which reads
+                  as a lit rectangle against the ink hero. Washes at both edges
+                  bed it into the section instead. */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-x-0 top-0 h-1/4 bg-gradient-to-b from-ink/45 to-transparent"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink via-ink/70 to-transparent"
+              />
+              <div className="absolute inset-x-0 bottom-0 p-7">
+                <p className="type-heading text-2xl text-white">Abishan Umashanker</p>
+                <p className="type-label mt-2.5 text-terracotta">Realtor&reg;</p>
+                <p className="mt-4 text-sm text-white/50">{businessInfo.brokerage}</p>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>

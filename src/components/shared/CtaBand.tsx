@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { ArrowUpRight, Phone } from 'lucide-react'
 import { Reveal } from '@/components/motion/Reveal'
+import { WordReveal } from '@/components/motion/WordReveal'
 import { businessInfo } from '@/lib/metadata'
 import { cn } from '@/lib/cn'
 
@@ -12,44 +13,52 @@ interface CtaBandProps {
 
 export function CtaBand({ title, description, className }: CtaBandProps) {
   return (
-    <section className={cn('px-4 py-20 sm:px-6 md:py-28 lg:px-8', className)}>
-      <Reveal>
-        <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[28px] bg-gradient-to-br from-brand via-[#114540] to-[#16544B] px-6 py-16 text-center sm:px-10 md:py-20">
-          <div
-            aria-hidden="true"
-            className="absolute -left-10 -top-16 h-60 w-60 rounded-full border border-terracotta/25"
-          />
-          <div
-            aria-hidden="true"
-            className="absolute -bottom-20 -right-8 h-72 w-72 rounded-full border border-terracotta/20"
-          />
-          <div className="relative">
-            <h2 className="text-balance mx-auto max-w-2xl font-display text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl">
+    <section className={cn('bg-surface', className)}>
+      <div className="mx-auto max-w-shell px-5 py-20 sm:px-8 md:py-28 lg:px-12">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start lg:gap-20">
+          <div>
+            <Reveal travel={0}>
+              <p className="type-label text-terracotta-ink">Next step</p>
+            </Reveal>
+            <WordReveal
+              as="h2"
+              className="type-heading mt-6 text-[2.2rem] text-brand xs:text-[2.6rem] sm:text-5xl lg:text-[3.6rem]"
+            >
               {title}
-            </h2>
-            <p className="mx-auto mt-4 max-w-lg text-lg leading-relaxed text-white/75">
+            </WordReveal>
+          </div>
+
+          <Reveal delay={0.1}>
+            <p className="text-base leading-[1.75] text-muted-foreground sm:text-[17px]">
               {description}
             </p>
-            <div className="mt-9 flex flex-wrap justify-center gap-3.5">
+
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
               <Link
                 href="/contact"
-                className="group inline-flex items-center gap-3 rounded-full bg-terracotta-solid py-2 pl-7 pr-2 text-base font-bold text-white transition-shadow hover:shadow-lg hover:shadow-black/20"
+                className="group inline-flex items-center justify-between gap-4 rounded-full bg-brand py-2 pl-7 pr-2 text-white transition-colors duration-300 hover:bg-ink sm:justify-start"
               >
-                Book a Consultation
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand transition-transform duration-300 group-hover:rotate-45">
+                <span className="text-base font-semibold">Book a consultation</span>
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-terracotta transition-transform duration-500 ease-out group-hover:rotate-45">
                   <ArrowUpRight className="h-4 w-4 text-white" aria-hidden="true" />
                 </span>
               </Link>
               <a
                 href={`tel:${businessInfo.phone}`}
-                className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-7 py-4 text-base font-semibold text-white hover:bg-white/15"
+                className="inline-flex items-center justify-center gap-2.5 rounded-full border border-brand/20 px-7 py-4 text-base font-semibold text-brand transition-colors duration-300 hover:border-brand/50"
               >
-                <Phone className="h-4 w-4" aria-hidden="true" /> {businessInfo.phoneDisplay}
+                <Phone className="h-4 w-4 text-terracotta-solid" aria-hidden="true" />
+                {businessInfo.phoneDisplay}
               </a>
             </div>
-          </div>
+
+            <p className="mt-6 text-sm text-muted-foreground">
+              Call or text any day &mdash; a first conversation costs nothing and commits you to
+              nothing.
+            </p>
+          </Reveal>
         </div>
-      </Reveal>
+      </div>
     </section>
   )
 }
